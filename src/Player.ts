@@ -1,5 +1,3 @@
-// import Fruit from './Fruit.js';
-// import Spider from './Spider.js';
 import CanvasRenderer from './CanvasRenderer.js';
 import ScoreItem from './ScoreItem.js';
 
