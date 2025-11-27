@@ -4,13 +4,12 @@ import CanvasRenderer from './CanvasRenderer.js';
 import Fruit from './Fruit.js';
 import KeyListener from './KeyListener.js';
 import Player from './Player.js';
+import ScoreItem from './ScoreItem.js';
 
 export default class FruitDrop extends Game {
   private canvas: HTMLCanvasElement;
 
-  private spiders: Spider[] = [];
-
-  private fruits: Fruit[] = [];
+  private scoreItems: ScoreItem[] = [];
 
   private nextItem: number;
 
@@ -37,9 +36,9 @@ export default class FruitDrop extends Game {
     const random: number = Math.random();
 
     if (random > 0.9) {
-      this.spiders.push(new Spider(this.canvas.width));
+      this.scoreItems.push(new Spider(this.canvas.width));
     } else {
-      this.fruits.push(new Fruit(this.canvas.width));
+      this.scoreItems.push(new Fruit(this.canvas.width));
     }
   }
 
@@ -66,37 +65,20 @@ export default class FruitDrop extends Game {
 
       this.player.update(delta);
 
-      this.spiders.forEach((spider: Spider, index: number) => {
-        spider.update(delta);
-        const isColliding: boolean = this.player.isCollidingSpider(spider);
+      this.scoreItems.forEach((item: ScoreItem, index: number) => {
+        item.update(delta);
+        const isColliding: boolean = this.player.isColliding(item);
 
         if (isColliding) {
-          this.score += spider.getScore();
+          this.score += item.getScore();
 
-          spider.playSound();
+          item.playSound();
 
-          this.spiders.splice(index, 1);
+          this.scoreItems.splice(index, 1);
         }
 
-        if (spider.getPosY() > this.canvas.height) {
-          this.spiders.splice(index, 1);
-        }
-      });
-
-      this.fruits.forEach((fruit: Fruit, index: number) => {
-        fruit.update(delta);
-        const isColliding: boolean = this.player.isCollidingFruit(fruit);
-
-        if (isColliding) {
-          this.score += fruit.getScore();
-
-          fruit.playSound();
-
-          this.fruits.splice(index, 1);
-        }
-
-        if (fruit.getPosY() > this.canvas.height) {
-          this.fruits.splice(index, 1);
+        if (item.getPosY() > this.canvas.height) {
+          this.scoreItems.splice(index, 1);
         }
       });
     }
@@ -121,8 +103,7 @@ export default class FruitDrop extends Game {
     CanvasRenderer.clearCanvas(this.canvas);
 
     if (this.timeLeft <= 0) {
-      this.spiders = [];
-      this.fruits = [];
+      this.scoreItems = [];
 
       if (this.score > this.player.getHighScore()) {
         this.player.setHighScore(this.score);
@@ -133,12 +114,8 @@ export default class FruitDrop extends Game {
     } else {
       this.player.render(this.canvas);
 
-      for (const spider of this.spiders) {
-        spider.render(this.canvas);
-      }
-
-      for (const fruit of this.fruits) {
-        fruit.render(this.canvas);
+      for (const item of this.scoreItems) {
+        item.render(this.canvas);
       }
     }
 

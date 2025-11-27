@@ -1,6 +1,7 @@
-import Fruit from './Fruit.js';
-import Spider from './Spider.js';
+// import Fruit from './Fruit.js';
+// import Spider from './Spider.js';
 import CanvasRenderer from './CanvasRenderer.js';
+import ScoreItem from './ScoreItem.js';
 
 export default class Player {
   private image: HTMLImageElement;
@@ -44,22 +45,11 @@ export default class Player {
    * isCollidingFruit
    * @returns boolean
    */
-  public isCollidingFruit(fruit: Fruit): boolean {
-    return this.posX < fruit.getPosX() + fruit.getWidth() &&
-           this.posX + this.image.width > fruit.getPosX() &&
-           this.posY < fruit.getPosY() + fruit.getHeight() &&
-           this.posY + this.image.height > fruit.getPosY();
-  }
-
-  /**
-   * isCollidingSpider
-   * @returns boolean
-   */
-  public isCollidingSpider(spider: Spider): boolean {
-    return this.posX < spider.getPosX() + spider.getWidth() &&
-           this.posX + this.image.width > spider.getPosX() &&
-           this.posY < spider.getPosY() + spider.getHeight() &&
-           this.posY + this.image.height > spider.getPosY();
+  public isColliding(item: ScoreItem): boolean {
+    return this.posX < item.getPosX() + item.getWidth() &&
+           this.posX + this.image.width > item.getPosX() &&
+           this.posY < item.getPosY() + item.getHeight() &&
+           this.posY + this.image.height > item.getPosY();
   }
 
   /**
