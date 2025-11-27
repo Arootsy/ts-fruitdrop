@@ -51,6 +51,14 @@ export default class FruitDrop extends Game {
     } else if (this.keyListener.isKeyDown(KeyListener.KEY_RIGHT)) {
       this.player.moveRight();
     }
+
+    if (this.keyListener.isKeyDown(KeyListener.KEY_ENTER) && this.isInState(Game.STATE_STOPPING)) {
+      this.timeLeft = 60 * 1000;
+      this.score = 0;
+      this.scoreItems = [];
+      this.nextItem = Math.random() * 3000;
+      this.start();
+    }
   }
 
   /**
@@ -110,7 +118,9 @@ export default class FruitDrop extends Game {
       }
 
       CanvasRenderer.writeText(this.canvas, 'Game Over!', this.canvas.width / 2, this.canvas.height / 2, 'center', 'Arial', 72, 'white');
-      CanvasRenderer.writeText(this.canvas, `High Score: ${this.player.getHighScore()}`, this.canvas.width / 2, (this.canvas.height / 2) + 80, 'center', 'Arial', 72, 'white');
+      CanvasRenderer.writeText(this.canvas, `Press ${KeyListener.KEY_ENTER} to Play Again`, this.canvas.width / 2, (this.canvas.height / 2) + 80, 'center', 'Arial', 72, 'white');
+
+      this.stop();
     } else {
       this.player.render(this.canvas);
 
@@ -119,6 +129,7 @@ export default class FruitDrop extends Game {
       }
     }
 
+    CanvasRenderer.writeText(this.canvas, `High Score: ${this.player.getHighScore()}`, this.canvas.width - 10, 30, 'right', 'Arial', 24, 'white');
     CanvasRenderer.writeText(this.canvas, `Score: ${this.score} Time: ${Math.round(this.timeLeft / 1000)}`, 15, 30, 'left', 'Arial', 24, 'white');
   }
 }
