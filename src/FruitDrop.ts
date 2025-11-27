@@ -117,8 +117,8 @@ export default class FruitDrop extends Game {
         this.player.setHighScore(this.score);
       }
 
-      CanvasRenderer.writeText(this.canvas, 'Game Over!', this.canvas.width / 2, this.canvas.height / 2, 'center', 'Arial', 72, 'white');
-      CanvasRenderer.writeText(this.canvas, `Press ${KeyListener.KEY_ENTER} to Play Again`, this.canvas.width / 2, (this.canvas.height / 2) + 80, 'center', 'Arial', 72, 'white');
+      CanvasRenderer.writeText(this.canvas, 'Game Over!', this.canvas.width / 2, this.canvas.height / 2, 'center', 'Arial', 86, 'red');
+      CanvasRenderer.writeText(this.canvas, `Press ${KeyListener.KEY_ENTER} to Play Again`, this.canvas.width / 2, (this.canvas.height / 2) + 90, 'center', 'Arial', 72, 'white');
 
       this.stop();
     } else {
